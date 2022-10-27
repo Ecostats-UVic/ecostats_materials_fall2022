@@ -1,0 +1,47 @@
+---
+title: "R Markdown - Ecostats"
+author: "Megan & Dom" 
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  pdf_document:
+    toc: yes
+    toc_depth: 3
+
+---
+
+```{r title of chunk goes here and has to be unique, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) #sets all chunks to have a certain parameter 
+```
+# This is the biggest heading 
+## This is the second largest
+### Third 
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+#package "here" will help with navagating the working directory in R markdown which is not technically possible in R markdown 
+
+```{r new title goes here, }
+library(here)
+edidiv<- read.csv(file="Sept_28_Intro_to_R/edidiv.csv")
+edidiv2 <- read.csv(file=here::here("Sept_28_Intro_to_R", "edidiv.csv"))
+```
+
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
