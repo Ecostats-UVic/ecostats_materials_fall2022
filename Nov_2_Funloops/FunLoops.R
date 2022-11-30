@@ -181,3 +181,46 @@ theme.my.own <- function(){
     ylab("Griffon vulture abundance\n") +                             
     xlab("\nYear") +
     theme.my.own())
+
+
+LPI.UK <- filter(LPI, Country.list == "United Kingdom")
+house.sparrow <- filter(LPI.UK, Common.Name == "House sparrow")
+ggplot(house.sparrow, aes(x = year, y= abundance)) +
+  geom_point() + geom_smooth(method = "lm")
+
+great.tit <- filter(LPI.UK, Common.Name == "Great tit")
+corn.bunting <- filter(LPI.UK, Common.Name == "Corn bunting")
+reed.bunting <- filter(LPI.UK, Common.Name == "Reed bunting")
+meadow.pipit <- filter(LPI.UK, Common.Name == "Meadow pipit")
+
+sp_list <- list(house.sparrow,great.tit, corn.bunting, meadow.pipit)
+
+for (i in 1:length(sp_list)) { 
+  data <- as.data.frame(sp_list[i])
+  sp.name <- unique(data$Common.Name)
+  plot<- ggplot(data, aes(x = year, y = abundance)) + 
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(title = sp.name)
+  ggsave(plot, file = here::here("Nov_2_Funloops", paste(sp.name, ".png", sep = "")), scale = 2)
+  print(plot)
+}
+
+
+
+#instead of creating a list first, what if we just loop through all the available
+#species in the UK data set
+unique(LPI.UK$Common.Name)
+
+
+for (i in 1:length(unique(LPI.UK$Common.Name))) { 
+  data <- filter(LPI.UK, Common.Name == unique(LPI.UK$Common.Name)[i])
+  sp.name <- unique(data$Common.Name)
+  plot<- ggplot(data, aes(x = year, y = abundance)) + 
+    geom_point() +
+    geom_smooth(method = "lm") +
+    labs(title = sp.name) +
+    theme_classic()
+  ggsave(plot, file = here::here("Nov_2_Funloops", paste(sp.name, ".png", sep = "")), scale = 2)
+  print(plot)
+}
